@@ -1,0 +1,235 @@
+/*
+How many customers purchased two songs at $0.99 each?
+*/
+
+/*
+CREATED BY: KELVIN ROMAN
+CREATE DATE: 03/22/2025
+DESCRIPTION: CUSTOMERS WHO PURCHASED TWO SONGS AT $0.99 EACH
+*/
+
+SELECT 
+	InvoiceDate,
+	BillingAddress,
+	BillingCity,
+	Total
+FROM 
+	Invoice 
+WHERE
+	total = 1.98
+ORDER BY
+	InvoiceDate;
+
+
+/*
+CREATED BY: KELVIN ROMAN
+CREATE DATE: 03/22/2025
+DESCRIPTION: INVOICES THAT EXISTS BETWEEN $1.98 AND $5.00
+*/
+
+SELECT 
+	InvoiceDate,
+	BillingAddress,
+	BillingCity,
+	Total
+FROM 
+	Invoice
+WHERE
+	total BETWEEN 1.98 AND 5.00
+ORDER BY
+	InvoiceDate;
+
+/*
+CREATED BY: KELVIN ROMAN
+CREATE DATE: 03/22/2025
+DESCRIPTION: INVOICES THAT ARE EXACTLY $1.98 OR $5.00
+*/
+
+SELECT 
+	InvoiceDate,
+	BillingAddress,
+	BillingCity,
+	Total
+FROM 
+	Invoice
+WHERE
+	total IN(1.98, 3.96)
+ORDER BY
+	InvoiceDate;
+	
+	
+/*
+CREATED BY: KELVIN ROMAN
+CREATE DATE: 03/22/2025
+DESCRIPTION: INVOICES BILLED TO BRUSSELS
+*/
+
+SELECT 
+	InvoiceDate,
+	BillingAddress,
+	BillingCity,
+	Total
+FROM
+	Invoice
+WHERE
+	BillingCity = "Brussels"
+ORDER BY
+	InvoiceDate;
+	
+/*
+CREATED BY: KELVIN ROMAN
+CREATE DATE: 03/22/2025
+DESCRIPTION: INVOICES BILLED TO BRUSSELS, ORLANDOM OR PARIS
+*/
+
+SELECT 
+	InvoiceDate,
+	BillingAddress,
+	BillingCity,
+	Total
+FROM
+	Invoice
+WHERE
+	BillingCity IN("Brussels", "Orlando", "Paris")
+ORDER BY
+	InvoiceDate;
+	
+/*
+CREATED BY: KELVIN ROMAN
+CREATE DATE: 03/22/2025
+DESCRIPTION: INVOICES BILLED TO CITIES THAT START WITH B
+*/
+
+SELECT 
+	InvoiceDate,
+	BillingAddress,
+	BillingCity,
+	Total
+FROM
+	Invoice
+WHERE
+	BillingCity LIKE "B%"
+ORDER BY
+	InvoiceDate;
+	
+/*
+CREATED BY: KELVIN ROMAN
+CREATE DATE: 03/22/2025
+DESCRIPTION: INVOICES BILLED TO CITIES THAT HAVE A B ANYWHERE IN ITS NAME
+*/
+
+SELECT 
+	InvoiceDate,
+	BillingAddress,
+	BillingCity,
+	Total
+FROM
+	Invoice
+WHERE
+	BillingCity LIKE "%B%"
+ORDER BY
+	InvoiceDate;
+	
+/*
+CREATED BY: KELVIN ROMAN
+CREATE DATE: 03/22/2025
+DESCRIPTION: INVOICES BILLED TO ON MAY 22, 2010
+*/
+
+SELECT 
+	InvoiceDate,
+	BillingAddress,
+	BillingCity,
+	Total
+FROM
+	Invoice
+WHERE
+	DATE(InvoiceDate) = "2010-05-22"
+ORDER BY
+	InvoiceDate;
+	
+/*
+CREATED BY: KELVIN ROMAN
+CREATE DATE: 03/22/2025
+DESCRIPTION: INVOICES BILLED AFTER 2010-05-22 AND HAVE A TOTAL OF LESS THAN 3.00
+*/
+
+SELECT 
+	InvoiceDate,
+	BillingAddress,
+	BillingCity,
+	Total
+FROM
+	Invoice
+WHERE
+	DATE(InvoiceDate) > "2010-05-22" AND Total < 3.00
+ORDER BY
+	InvoiceDate;
+	
+/*
+CREATED BY: KELVIN ROMAN
+CREATE DATE: 03/22/2025
+DESCRIPTION: INVOICES BILLING CITY STARTS WITH P OR STARTS WITH D
+*/
+
+SELECT 
+	InvoiceDate,
+	BillingAddress,
+	BillingCity,
+	Total
+FROM
+	Invoice
+WHERE
+	BillingCity LIKE "P%" OR BillingCity LIKE "D%"
+ORDER BY
+	InvoiceDate;
+
+		
+/*
+CREATED BY: KELVIN ROMAN
+CREATE DATE: 03/22/2025
+DESCRIPTION: INVOICES GREATER THAN 1.98 FORM CITY THAT STARTS WITH P OR STARTS WITH D
+*/
+
+SELECT 
+	InvoiceDate,
+	BillingAddress,
+	BillingCity,
+	Total
+FROM
+	Invoice
+WHERE
+	Total > 1.98 AND (BillingCity LIKE "P%" OR BillingCity LIKE "D%")
+ORDER BY
+	InvoiceDate;
+	
+/*
+CREATED BY: KELVIN ROMAN
+CREATE DATE: 03/22/2025
+DESCRIPTION:
+	SALES GOAL WANT AS MANY CUSTOMERS TO SPEND BETWEEN $7.00 AND $15.00
+	
+	SALES CATEGORIES:
+	BASELINE PURCHASE - BETWEEN $0.99 AND $1.99
+	LOW PURCHASE - BETWEEN $2.00 AND $6.99
+	TARGET PURCHASE - BETWEEN $7.00 AND $15.00 
+	TOP PERFORMER - ABOVER $15.00
+*/
+
+SELECT 
+	InvoiceDate,
+	BillingAddress,
+	BillingCity,
+	Total,
+	CASE
+		WHEN Total < 2.00 THEN "Baseline Purchase"
+		WHEN Total BETWEEN 2.00 AND 6.99 THEN "Low Purchase"
+		WHEN Total BETWEEN 7.00 AND 15.00 THEN "Target Purchase"
+		ELSE "Top Performer"
+	END AS PurchaseType
+FROM
+	Invoice
+WHERE
+	PurchaseType = "Top Performer"
+ORDER BY
+	BillingCity;
